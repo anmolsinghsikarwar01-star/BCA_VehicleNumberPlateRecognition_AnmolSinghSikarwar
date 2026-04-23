@@ -86,30 +86,14 @@ Open the file:
 
 ## ▶️ Usage
 
-1. Open the web dashboard  
+1. Run app.py then click on link present in terminal  
 2. Upload a video file  
-3. Click **Start System / Upload**  
+3. Click **Start System** Then Wait until start button is clickable again then 'detection logs' tab Detected Number plates are shown there.
 4. The system will:
    - Detect number plates  
    - Extract text using OCR  
    - Display detected plates  
    - Store data in database  
-
----
-
-## 📊 Output Example
-
----
-
-## 🗄 Database Schema
-
-Table: `logs`
-
-| Column | Type |
-|--------|------|
-| id     | INTEGER |
-| plate  | TEXT |
-| time   | TEXT |
 
 ---
 
