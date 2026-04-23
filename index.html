@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Vehicle Rec.</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2L3 6v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V6L12 2z"/></svg>
+            </div>
+            <span class="logo-text">Vehicle Rec.</span>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-item active" id="nav-live" onclick="showPage('live')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+                </svg>
+                Live Monitor<span class="nav-dot"></span>
+            </div>
+            <div class="nav-item" id="nav-logs" onclick="showPage('logs')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <ellipse cx="12" cy="12" rx="10" ry="5"/>
+                    <path d="M2 12v4c0 2.8 4.5 5 10 5s10-2.2 10-5v-4"/>
+                    <path d="M2 8v4c0 2.8 4.5 5 10 5s10-2.2 10-5V8"/>
+                </svg>
+                Detection Logs<span class="nav-dot"></span>
+            </div>
+            <div class="nav-item" id="nav-analytics" onclick="showPage('analytics')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+                </svg>
+                Analytics<span class="nav-dot"></span>
+            </div>
+        </nav>
+        <div class="system-status">
+            <div class="status-dot"></div>
+            <div class="status-info">
+                <span class="status-title">System Online</span>
+                <span class="status-sub">v2.5.0</span>
+            </div>
+        </div>
+    </aside>
+
+    <div class="main">
+        <div class="topbar">
+            <span class="topbar-title" id="page-title">Vehicle Recognition Feed</span>
+            <div class="topbar-right">
+                <div class="date-badge" id="current-date"></div>
+                <div class="settings-btn">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="page active" id="page-live">
+            <div class="tabs">
+                <div class="tab active" onclick="switchLiveTab('livefeed', this)">Live Feed</div>
+                <div class="tab" onclick="switchLiveTab('uploadvideo', this)">Upload Video</div>
+            </div>
+            <div id="view-livefeed">
+                <div class="video-card">
+                    <div class="video-overlay-top">
+                        <div class="offline-badge">
+                            <div class="offline-dot"></div>&nbsp;OFFLINE
+                        </div>
+                        <div class="cam-badge">
+                            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                <circle cx="12" cy="13" r="4"/>
+                            </svg>
+                            CAM-01 • North Perimeter
+                        </div>
+                    </div>
+                    <div class="video-center">
+                        <div class="play-btn" onclick="initSystem()">
+                            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        </div>
+                        <span class="init-label" id="initLabel">INITIALIZE SYSTEM</span>
+                    </div>
+                </div>
+                <div class="bottom-panel">
+                    <button class="start-btn2" onclick="initSystem()">
+                        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        Start System
+                    </button>
+                </div>
+            </div>
+            
+            <div id="view-uploadvideo" style="display:none; flex-direction:column; gap:20px;">
+                <div class="video-card" id="uploadVideoCard" onclick="triggerFileSelect()" style="cursor:pointer;">
+                    
+                    <div class="video-center" id="uploadPlaceholder">
+                        <div class="upload-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="16 16 12 12 8 16"/>
+                                <line x1="12" y1="12" x2="12" y2="21"/>
+                                <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+                            </svg>
+                        </div>
+                        <div class="upload-text-group">
+                            <span class="upload-sub">No video selected</span>
+                            <span class="upload-label">SELECT VIDEO FILE</span>
+                        </div>
+                    </div>
+                    <video id="uploadedVideo" style="display:none; width:100%; height:100%; object-fit:contain; position:absolute; inset:0;"></video>
+                    <input type="file" id="fileInput" accept="video/*" style="display:none" onchange="handleFile(this)"/>
+                </div>
+                <div class="bottom-panel" style="gap:12px;">
+                    <button class="start-btn" onclick="uploadAndProcess()">
+                        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        Start System
+                    </button>
+                    <button class="select-video-btn" onclick="triggerFileSelect()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                        </svg>
+                        Select Video
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-logs">
+            <div class="logs-toolbar">
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" placeholder="Search plates, colors, or types..."/>
+                </div>
+                <button class="export-btn">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Export CSV
+                </button>
+            </div>
+            <div class="table-wrap">
+                <div class="table-head">
+                    <span class="th">Timestamp</span>
+                    <span class="th">Plate<br>Number</span>
+                    <span class="th">Details</span>
+                    <span class="th">Confidence</span>
+                    <span class="th">Camera</span>
+                    <span class="th">Snapshot</span>
+                </div>
+                <div class="table-body">
+                    <span class="no-records">No records found.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-analytics">
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Total Detections</span>
+                    <span class="stat-value sv-white">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Unique Plates</span>
+                    <span class="stat-value sv-blue">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Avg Confidence</span>
+                    <span class="stat-value sv-green">0%</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Active Cameras</span>
+                    <span class="stat-value sv-purple">1</span>
+                </div>
+            </div>
+            <div class="chart-card" id="chartCard">
+                <div class="chart-title">Detections by Hour</div>
+                <canvas id="chartCanvas"></canvas>
+            </div>
+
+        <div class="chart-card vehicle-types-card">
+            <div class="chart-title">Vehicle Types</div>
+            <div class="types-placeholder"> </div>
+         </div>
+     </div>
+
+    </div>
+</div>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="/static/script.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
