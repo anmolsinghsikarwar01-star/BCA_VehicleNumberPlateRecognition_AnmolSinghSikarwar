@@ -149,7 +149,7 @@ Table: `logs`
 ---
 
 ## 👨‍💻 Author
-**Sahil Yadav**  
+**Anmol Singh Sikarwar**  
 BCA Student | AI/ML Enthusiast  
 
 ---
